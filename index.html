@@ -32,35 +32,35 @@
 	</div>
 
 	<div class="container mt-4">
-		<div class="card">
+		<div class="card encrypt-section">
 			<div class="card-header">
 				Encryption
 			</div>
 			<div class="card-body">
 				<form>
 					<div class="mb-2 col-sm-5">
-						<label for="epassphrase" class="form-label">Password</label>
-						<input type="password" class="form-control form-control-sm" id="epassphrase" placeholder="Minimum to have at least 8 characters better">
+						<label for="epassphrase" class="form-label">Password <small class="text-muted">(note: leading and trailing spaces will be trimmed)</small></label>
+						<input type="password" class="form-control form-control-sm passphrase" id="epassphrase" placeholder="Minimum to have at least 8 characters better">
 					</div>
 
 					<div class="mb-2 col-sm-5">
 						<label for="econfirmpass" class="form-label">Confirm Password</label>
-						<input type="password" class="form-control form-control-sm" id="econfirmpass">
+						<input type="password" class="form-control form-control-sm confirmpass" id="econfirmpass">
 					</div>
 
 					<div class="mb-2 col-sm-10">
-						<label for="emnmonicword" class="form-label">Mnemonic words</label>
-						<textarea class="form-control form-control-sm" placeholder="Put your mnemonic words here to encrypt" id="emnmonicword"></textarea>
+						<label for="emnmonicword" class="form-label">Mnemonic words <small class="text-muted">(note: leading and trailing spaces will be trimmed)</small></label>
+						<textarea class="form-control form-control-sm target-text" placeholder="Put your mnemonic words here to encrypt" id="emnmonicword"></textarea>
 					</div>
 
 					<div class="mb-3 col-sm-5">
-						<button type="button" class="btn btn-primary">Encrypt</button>
+						<button type="button" class="btn btn-primary" id="encryptBtn">Encrypt</button>
 					</div>
 
 					<div class="mb-2 col-sm-10">
 						<hr />
-						<label for="eresult" class="form-label">Encryption Result</label>
-						<textarea class="form-control form-control-sm" placeholder="Ciphertext result here" id="eresult" disabled></textarea>
+						<label for="eresult" class="form-label">Encryption Result <small class="text-muted">(Please verify the cipher in decryption section below)</small></label>
+						<textarea class="form-control form-control-sm result-text" placeholder="Ciphertext result here" id="eresult" disabled></textarea>
 					</div>
 				</form>
 			</div>
@@ -68,39 +68,41 @@
 	</div>
 
 	<div class="container mt-4">
-		<div class="card">
+		<div class="card decrypt-section">
 			<div class="card-header">
 				Decryption
 			</div>
 			<div class="card-body">
 				<form>
 					<div class="mb-2 col-sm-5">
-						<label for="dpassphrase" class="form-label">Password</label>
-						<input type="password" class="form-control form-control-sm" id="dpassphrase" placeholder="Put your decryption password here">
+						<label for="dpassphrase" class="form-label">Password <small class="text-muted">(note: leading and trailing spaces will be trimmed)</small></label>
+						<input type="password" class="form-control form-control-sm passphrase" id="dpassphrase" placeholder="Put your decryption password here">
 					</div>
 
 					<div class="mb-2 col-sm-5">
 						<label for="dconfirmpass" class="form-label">Confirm Password</label>
-						<input type="password" class="form-control form-control-sm" id="dconfirmpass">
+						<input type="password" class="form-control form-control-sm confirmpass" id="dconfirmpass">
 					</div>
 
 					<div class="mb-2 col-sm-10">
-						<label for="dciphertext" class="form-label">Ciphertext</label>
-						<textarea class="form-control form-control-sm" placeholder="Put your encrypted ciphertext here to decrypt" id="dciphertext"></textarea>
+						<label for="dciphertext" class="form-label">Ciphertext <small class="text-muted">(note: leading and trailing spaces will be trimmed)</small></label>
+						<textarea class="form-control form-control-sm target-text" placeholder="Put your encrypted ciphertext here to decrypt" id="dciphertext"></textarea>
 					</div>
 
 					<div class="mb-3 col-sm-5">
-						<button type="button" class="btn btn-primary">Decrypt</button>
+						<button type="button" class="btn btn-primary" id="decryptBtn">Decrypt</button>
 					</div>
 
 					<div class="mb-2 col-sm-10">
 						<hr />
 						<label for="dresult" class="form-label">Decryption Result</label>
-						<textarea class="form-control form-control-sm" placeholder="Mnemonic words result here" id="dresult" disabled></textarea>
+						<textarea class="form-control form-control-sm result-text" placeholder="Mnemonic words result here" id="dresult" disabled></textarea>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="js/webcrypto.js"></script>
 </body>
 </html>
