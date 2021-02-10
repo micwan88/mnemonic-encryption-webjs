@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+
+    <title>Mnemonic Encryption/Decryption via WebCrypto</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<span class="navbar-brand mb-0 h1">Mnemonic Encryption/Decryption With AES-GCM via WebCrypto</span>
+	</nav>
+
+	<div class="container mt-4">
+		<p>Mnemonic words are hard to remember and it is unsafe to put it in online storage. To solve this, we can encrypt the mnemonic words with memorable passphrase, then it's more safe to store the result ciphertext in the online storage.</p>
+
+		<p>The encryption/decryption is done by WebCrypto API with AES-GCM (128 bits due to WebCrypto limit) and you can refer to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">Mozilla Developer Site</a> for more detail about that API.</p>
+
+		<div class="alert alert-success" role="alert">
+			This tool is a standalone webpage. Everyone can download it to execute on local machine safely. Also, every one can even examine the source code in github project <a href="https://github.com/micwan88/mnemonic-encryption-webjs" target="_blank">mnemonic-encryption-webjs</a>.
+		</div>
+	</div>
+
+	<div class="container mt-4">
+		<div class="card">
+			<div class="card-header">
+				Encryption
+			</div>
+			<div class="card-body">
+				<form>
+					<div class="mb-2 col-sm-5">
+						<label for="epassphrase" class="form-label">Password</label>
+						<input type="password" class="form-control form-control-sm" id="epassphrase" placeholder="Minimum to have at least 8 characters better">
+					</div>
+
+					<div class="mb-2 col-sm-5">
+						<label for="econfirmpass" class="form-label">Confirm Password</label>
+						<input type="password" class="form-control form-control-sm" id="econfirmpass">
+					</div>
+
+					<div class="mb-2 col-sm-10">
+						<label for="emnmonicword" class="form-label">Mnemonic words</label>
+						<textarea class="form-control form-control-sm" placeholder="Put your mnemonic words here to encrypt" id="emnmonicword"></textarea>
+					</div>
+
+					<div class="mb-3 col-sm-5">
+						<button type="button" class="btn btn-primary">Encrypt</button>
+					</div>
+
+					<div class="mb-2 col-sm-10">
+						<hr />
+						<label for="eresult" class="form-label">Encryption Result</label>
+						<textarea class="form-control form-control-sm" placeholder="Ciphertext result here" id="eresult" disabled></textarea>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mt-4">
+		<div class="card">
+			<div class="card-header">
+				Decryption
+			</div>
+			<div class="card-body">
+				<form>
+					<div class="mb-2 col-sm-5">
+						<label for="dpassphrase" class="form-label">Password</label>
+						<input type="password" class="form-control form-control-sm" id="dpassphrase" placeholder="Put your decryption password here">
+					</div>
+
+					<div class="mb-2 col-sm-5">
+						<label for="dconfirmpass" class="form-label">Confirm Password</label>
+						<input type="password" class="form-control form-control-sm" id="dconfirmpass">
+					</div>
+
+					<div class="mb-2 col-sm-10">
+						<label for="dciphertext" class="form-label">Ciphertext</label>
+						<textarea class="form-control form-control-sm" placeholder="Put your encrypted ciphertext here to decrypt" id="dciphertext"></textarea>
+					</div>
+
+					<div class="mb-3 col-sm-5">
+						<button type="button" class="btn btn-primary">Decrypt</button>
+					</div>
+
+					<div class="mb-2 col-sm-10">
+						<hr />
+						<label for="dresult" class="form-label">Decryption Result</label>
+						<textarea class="form-control form-control-sm" placeholder="Mnemonic words result here" id="dresult" disabled></textarea>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
