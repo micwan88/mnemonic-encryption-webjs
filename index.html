@@ -24,7 +24,7 @@
 	<div class="container mt-4">
 		<p>Mnemonic words are hard to remember and it is unsafe to put it in online storage. To solve this, we can encrypt the mnemonic words with memorable passphrase, then it's more safe to store the result ciphertext in the online storage.</p>
 
-		<p>The encryption/decryption is done by WebCrypto API with AES-GCM (128 bits due to WebCrypto limit) and you can refer to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">Mozilla Developer Site</a> for more detail about that API.</p>
+		<p>The encryption/decryption is done by WebCrypto API with AES-GCM-256 and you can refer to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">Mozilla Developer Site</a> for more detail about that API.</p>
 
 		<div class="alert alert-success" role="alert">
 			This tool is a standalone webpage. Everyone can download it to execute on local machine safely. Also, every one can even examine the source code in github project <a href="https://github.com/micwan88/mnemonic-encryption-webjs" target="_blank">mnemonic-encryption-webjs</a>.
@@ -59,8 +59,8 @@
 
 					<div class="mb-2 col-sm-10">
 						<hr />
-						<label for="eresult" class="form-label">Encryption Result <small class="text-muted">(Please verify the cipher in decryption section below)</small></label>
-						<textarea class="form-control form-control-sm result-text" placeholder="Ciphertext result here" id="eresult" disabled></textarea>
+						<label class="form-label">Encryption Result <small class="text-muted">(Please verify the cipher in decryption section below)</small></label>
+						<div class="text-wrap result-text text-muted shadow-none p-3 bg-light rounded">Ciphertext result here</div>
 					</div>
 				</form>
 			</div>
@@ -95,8 +95,8 @@
 
 					<div class="mb-2 col-sm-10">
 						<hr />
-						<label for="dresult" class="form-label">Decryption Result</label>
-						<textarea class="form-control form-control-sm result-text" placeholder="Mnemonic words result here" id="dresult" disabled></textarea>
+						<label class="form-label">Decryption Result</label>
+						<div class="text-wrap result-text text-muted shadow-none p-3 bg-light rounded">Mnemonic words result here</div>
 					</div>
 				</form>
 			</div>
