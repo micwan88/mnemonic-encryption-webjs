@@ -9,10 +9,11 @@
 
 	function base64ToArrayBuffer(base64String) {
 		let binaryString = atob(base64String);
-		let returnByteArray = new Uint8Array(binaryString.length);
-		for (var i = 0; i < binaryString.length; i++) {
-			returnByteArray[i] = binaryString.charCodeAt(i);
-		}
+		let charCodeArray = binaryString.split(',');
+		let returnByteArray = new Uint8Array(charCodeArray.length);
+
+		for (var i = 0; i < charCodeArray.length; i++)
+			returnByteArray[i] = parseInt(charCodeArray[i], 10);
 		return returnByteArray.buffer;
 	}
 
@@ -109,17 +110,17 @@
 		);
 
 		//Debug usage
-		console.log(keySalt);
-		console.log(iv);
-		console.log(cipherText);
+		//console.log(keySalt);
+		//console.log(iv);
+		//console.log(cipherText);
 		//console.log(cipherText.byteLength);
 
 		let combinedUint8Array = combineIvKeySaltCipher(keySalt, iv, cipherText);
 
-		console.log(combinedUint8Array);
-		console.log(combinedUint8Array.byteLength);
+		//console.log(combinedUint8Array);
+		//console.log(combinedUint8Array.byteLength);
 
-		let base64EncodedResult = btoa(combinedUint8Array);
+		let base64EncodedResult = window.btoa(combinedUint8Array);
 
 		//console.log(base64EncodedResult);
 
@@ -136,26 +137,47 @@
 		if (!validation("Decryption", ".decrypt-section"))
 			return;
 
+		let isError = false;
 		let targetText = document.querySelector(".decrypt-section .target-text").value;
-
-		console.log(targetText);
-
 		let masterKey = await deriveMasterKey(".decrypt-section");
-		let combinedUint8Array = base64ToArrayBuffer(targetText);
+		let combinedUint8Array = null;
+		try {
+			combinedUint8Array = base64ToArrayBuffer(targetText);
+		} catch (e) {
+			alert("Decryption ciphertext incorrect format ! (Please use encryption section to generate ciphertext)");
+			return;
+		}
 
-		console.log(combinedUint8Array);
+		//console.log(combinedUint8Array);
 
 		//16 bytes for salt
 		let keySalt = new Uint8Array(combinedUint8Array, 0, deriveKeySaltSizeInByte);
 		//12 bytes (96bits) for iv - AES-GCM mode
 		let iv = new Uint8Array(combinedUint8Array, deriveKeySaltSizeInByte, aesGcmIvSizeInByte);
-		let cipherText = new Uint8Array(combinedUint8Array, deriveKeySaltSizeInByte + aesGcmIvSizeInByte, combinedUint8Array.length - deriveKeySaltSizeInByte - aesGcmIvSizeInByte);
+		let cipherText = new Uint8Array(combinedUint8Array, deriveKeySaltSizeInByte + aesGcmIvSizeInByte, combinedUint8Array.byteLength - deriveKeySaltSizeInByte - aesGcmIvSizeInByte);
 
-		console.log(keySalt);
-		console.log(iv);
-		console.log(cipherText);
+		//console.log(keySalt);
+		//console.log(iv);
+		//console.log(cipherText);
 
 		let aesKey = await deriveAESKey(masterKey, keySalt);
+
+		try {
+			let decryptedText = await window.crypto.subtle.decrypt(
+				{
+					name: "AES-GCM",
+					iv: iv,
+					tagLength: aesGcmTagLengthInBits
+				},
+				aesKey,
+				cipherText
+			);
+			let decoder = new TextDecoder();
+			document.querySelector(".decrypt-section .result-text").textContent = decoder.decode(decryptedText);
+		} catch (e) {
+			document.querySelector(".decrypt-section .result-text").textContent = "### Decryption Error ### (Incorrect password or invalid ciphertext)";
+			return;
+		}
 
 		clearFormData("Decryption", ".decrypt-section");
 
